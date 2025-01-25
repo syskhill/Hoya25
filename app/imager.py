@@ -2,7 +2,7 @@ import exifread # library for reading EXIF data from images
 from PIL import Image # library for image processing
 
 # Reading EXIF data from image
-def get_image_properties(filename):
+def get_image_properties(filePath):
     
     # Variables
     imageDateTaken = None
@@ -12,7 +12,7 @@ def get_image_properties(filename):
     
     # Opening image in binary mode
     try: 
-        with open(filename, 'rb') as image:
+        with open(filePath, 'rb') as image:
             tags = exifread.process_file(image)
             
     # Catching image corruption
@@ -32,7 +32,7 @@ def get_image_properties(filename):
         cameraModel = tags['Image Model'].values
 
     # Parsing image dimensions
-    image = Image.open(filename)
+    image = Image.open(filePath)
     width, height = image.size
     dimensions = str(width) + 'x' + str(height)
     

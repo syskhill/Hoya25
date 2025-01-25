@@ -5,25 +5,15 @@ from reader import read_file
 from clock import get_file_datetime
 from imager import get_image_properties
 
-# Variables
-filePath = None
-fileType = None
-fileSize = None
-hexContents = None
-fileAccessDate = None
-fileCreateDate = None
-fileModifyDate = None
-imageDateTaken = None
-cameraMake = None
-cameraModel = None
-dimensions = None
+# Metadata dictionary
+metadata = ['Path', 'Size', 'Item type', 'Date accessed', 'Date created', 'Date modify', 'Date taken', 'Camera make', 'Camera model', 'Dimensions']
 
 def __main__():
     # Get file path from frontend
     # To-do...
     
     # Manually assign filename (temporary)
-    filePath = './uploads/cat.jpg'
+    filePath = './uploads/Lab02.pdf'
     
     # Read file
     fileType, fileSize, hexContents = read_file(filePath)
@@ -56,7 +46,9 @@ def __main__():
         print('Camera make: ' + str(cameraMake))
         print('Camera model: ' + str(cameraModel))
         print('Dimensions: ' + str(dimensions))
-
+    else:
+        print("File is not an image.")
+    
     return
 
 __main__()
