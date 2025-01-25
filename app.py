@@ -68,7 +68,8 @@ def read_file(filename):
     try:
         with open(filename, 'rb') as file:
             fileContents = file.read()
-    
+            print(fileContents)
+            
             # Determining size of file
             fileSize = fileContents.count()
             if fileSize is None:
@@ -148,6 +149,9 @@ def compile_metadata(fileName, fileSize, fileType, fileModifyDate, fileCreateDat
 
 def compare_metadata(metadata, data):
     for key in metadata:
+        print({key} + ':' + {metadata[key]})
+        print({key} + ':' + {data[key]})
+        
         if metadata[key] == data[key]:
             return
             # Share successful comparison with frontend
@@ -161,13 +165,15 @@ def compare_metadata(metadata, data):
 
 # main method.
 def __main__():
-    fileName = 'V_notes.txt'
+    fileName = '.\\uploads\\V_notes.txt'
     read_file(fileName)
     get_file_datetime(fileName)
     
     if fileType == 'JPEG' or fileType == 'PNG':
         get_image_properties(fileName)
     
-    get_file_metadata(f"uploads\{fileName}", fileName, metadata)
+    get_file_metadata(f"uploads\\{fileName}", fileName, metadata)
     compiledData = compile_metadata(fileName, fileSize, fileType, fileModifyDate, fileCreateDate, fileAccessDate, imageDateTaken, cameraModel, dimensions, cameraMake)
     compare_metadata(metadata, compiledData)
+    
+__main__()
