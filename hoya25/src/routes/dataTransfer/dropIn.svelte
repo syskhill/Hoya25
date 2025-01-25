@@ -63,15 +63,19 @@
         cursor: pointer;
         background-color: white;
         color: #363B5B;
-        font-size: 1.25rem;
+        font-size: 1.75rem;
     }
     .drop-zone input {
         display: none;
     }
-    
+    .drop-zone:hover{
+        background-color: #C7B171;
+        border-color: white;
+        color: white;
+    }
 </style>
 
 <div class="drop-zone" role="button" tabindex="0" on:drop={handleDrop} on:dragover={handleDragOver} on:click={triggerFileInputClick} on:keydown={(event) => event.key === 'Enter' && triggerFileInputClick()}>
-    <p>Drag & Drop to Upload File</p>
+    <p>Drag & Drop <br>to Upload File</p>
     <input bind:this={fileInput} type="file" on:change={handleFileInput}>
 </div>
