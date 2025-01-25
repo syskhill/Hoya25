@@ -36,20 +36,25 @@
     .drop-zone {
         width: 300px;
         height: 200px;
-        border: 2px dashed #ccc;
+        border: 10px groove #C7B171;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
-        margin: 20px auto;
+        margin-top: 5rem;
         cursor: pointer;
+        background-color: white;
+        color: #363B5B;
+        font-size: 1.25rem;
     }
     .drop-zone input {
         display: none;
     }
+    
 </style>
 
 <div class="drop-zone" role="button" tabindex="0" on:drop={handleDrop} on:dragover={handleDragOver} on:click={triggerFileInputClick} on:keydown={(event) => event.key === 'Enter' && triggerFileInputClick()}>
+   
     <p>Drag & Drop to Upload File</p>
     <input bind:this={fileInput} type="file" on:change={handleFileInput}>
 </div>
