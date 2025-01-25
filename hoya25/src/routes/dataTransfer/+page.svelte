@@ -78,6 +78,11 @@
         background-color: #363B5B;
         color: white;
         padding: 1rem;
+        filter: drop-shadow(0px 0px 5px currentColor);
+        box-shadow: 0 20px 32px 0 rgba(0,0,0,0.37);
+        backdrop-filter: blur(10px);
+        border-bottom: 5px solid #C7B171;
+        border-style: double;
     }
     .navbar h1{
         color: white;
@@ -113,6 +118,9 @@
         font-size: 1.15rem;
         font-weight:70;
         padding: 0 2rem;
+        align-items: center;
+        text-align: center;
+        margin: 0.5rem;
         font-family:Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
     }
     button{
@@ -122,7 +130,7 @@
     font-size: 1rem;
     background: #C7B171;
     color: white;
-    margin: 2rem;
+    margin: 3rem;
 }
 button:hover {
     background: white;
@@ -134,6 +142,7 @@ h1 {
 	color: #363B5B;
 	font-family: Hiragino Sans GB, Arial, sans-serif;;
 	font-size: 6rem;
+    font-weight: 1000;
 	filter: drop-shadow(0px 0px 5px currentColor);
 	
 	&::after {
@@ -182,7 +191,7 @@ h1 {
 
 
 <div class="navbar">
-    <h1> insert logo-name </h1>
+    <h1> fileMaven </h1>
 </div>
 
 <div class="bg"></div>
@@ -190,7 +199,8 @@ h1 {
 <div class="container">
     <h2>Purpose</h2>
     <p>
-        insert the website purpose lol
+        This website allows you to upload a file and check its contents for any discrepancies.</p>
+    <p>You will receive a score and an explanation for any issues found within the file.
     </p>
     
     <DropIn />
