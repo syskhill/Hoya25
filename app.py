@@ -11,3 +11,8 @@
 # Past corruption(?)
 # Last access/damage
 # Specific data based on filetype
+
+# File Type: 
+#   Contents: Compare to metadata
+#   Metadata: Changes, Other stuff
+#   Binary: Corruption, Hash, File Type
