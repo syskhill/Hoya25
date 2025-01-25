@@ -70,12 +70,18 @@
         color: white;
     }
     .file-name {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 1.2rem;
-        color: #333;
+        
+        font-size: 1.5rem;
+        color: #363B5B;
+        text-align: center;
+        align-items:center;
+        justify-content: center;
+        display: flex;
+        max-width: 90%;
+        word-wrap: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0, 10px;
     }
 </style>
 
@@ -84,6 +90,6 @@
     {#if fileName}
         <div class="file-name">{fileName}</div>
     {:else}
-        <div><p>Drag & Drop <br>to Upload File</p></div>
+        <div><p>Drag & Drop <br> ⇪ <br>to Upload File</p></div>
     {/if}
 </div>
