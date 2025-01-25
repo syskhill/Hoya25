@@ -1,12 +1,34 @@
-import filetype
+import magic # library to determine file type
 
+# Function to read file in binary
 def read_file(filePath):
-    with open(filePath, 'r') as file:
-        fileContents = file.read()
+    
+    # Finding file type via Multipurpose Internet Mail Extensions
+    mime = magic.Magic(mime=True)
+    fileType = mime.from_file(filePath)
+    
+    # Try-Except block to catch corruption
+    try:
+        # If file is readable
+        with open(filePath, 'r') as file:
+            fileContents = file.read()
+            fileSize = len(fileContents)
+            
+    # If file is corrupted or not found
+    except Exception:
+        return None, None, None
+    
+    hexContents = ''
+
+    # Converting file contents from ascii to hex
+    for b in fileContents:
+        hexVal = hex(ord(b))[2::]
         
-        fileSize = len(fileContents)
-        
-        for b in fileContents:
-            print("Byte: ", hex(ord(b)))
-        
-        return fileSize
+        # Standardizing hex values to 2 characters
+        if len(hexVal) == 1:
+            hexVal = '0' + hexVal
+
+        hexContents += hexVal + ' '
+
+    # Returning values
+    return fileType, fileSize, hexContents
