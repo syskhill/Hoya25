@@ -130,7 +130,7 @@
     font-size: 1rem;
     background: #C7B171;
     color: white;
-    margin: 3rem;
+    margin: rem;
 }
 button:hover {
     background: white;
@@ -200,7 +200,7 @@ h1 {
     <h2>Purpose</h2>
     <p>
         This website allows you to upload a file and check its contents for any discrepancies.</p>
-    <p>You will receive a score and an explanation for any issues found within the file.
+    <p>You will receive a score and an explanation for any issues found in the file.
     </p>
     
     <DropIn />
