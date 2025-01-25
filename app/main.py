@@ -3,6 +3,7 @@
 
 from reader import read_file
 from clock import get_file_datetime
+from imager import get_image_properties
 
 # Variables
 filePath = None
@@ -22,15 +23,15 @@ def __main__():
     # To-do...
     
     # Manually assign filename (temporary)
-    filePath = './uploads/V_notes.txt'
+    filePath = './uploads/cat.jpg'
     
     # Read file
     fileType, fileSize, hexContents = read_file(filePath)
     
     # Debug print
-    print('File type: ' + fileType)
+    print('File type: ' + str(fileType))
     print('File size: ' + str(fileSize) + ' bytes')
-    print('Hex contents: ' + hexContents)
+    print('Hex contents: ' + str(hexContents))
     
     if fileType is None or fileSize is None or hexContents is None:
         # Send error to frontend
@@ -46,6 +47,16 @@ def __main__():
     print('File create date: ' + str(fileCreateDate))
     print('File modify date: ' + str(fileModifyDate))
     
+    if fileType[0:5] == 'image':
+        # Get image properties
+        imageDateTaken, cameraMake, cameraModel, dimensions = get_image_properties(filePath)
+        
+        # Debug print
+        print('Image date taken: ' + str(imageDateTaken))
+        print('Camera make: ' + str(cameraMake))
+        print('Camera model: ' + str(cameraModel))
+        print('Dimensions: ' + str(dimensions))
+
     return
 
 __main__()

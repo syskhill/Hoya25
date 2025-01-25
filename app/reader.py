@@ -10,7 +10,7 @@ def read_file(filePath):
     # Try-Except block to catch corruption
     try:
         # If file is readable
-        with open(filePath, 'r') as file:
+        with open(filePath, 'rb') as file:
             fileContents = file.read()
             fileSize = len(fileContents)
             
@@ -22,7 +22,7 @@ def read_file(filePath):
 
     # Converting file contents from ascii to hex
     for b in fileContents:
-        hexVal = hex(ord(b))[2::]
+        hexVal = hex(ord(chr(b)))[2::]
         
         # Standardizing hex values to 2 characters
         if len(hexVal) == 1:
@@ -30,5 +30,6 @@ def read_file(filePath):
 
         hexContents += hexVal + ' '
 
+    hexContents = hexContents[0:24]
     # Returning values
     return fileType, fileSize, hexContents
