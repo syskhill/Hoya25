@@ -22,8 +22,10 @@
 
 import os
 import filetype
-import datetime
+import exifread
 import win32com.client
+from PIL import Image
+from pathlib import Path
 
 # Get file and filename from frontend
 fileName = 'V_notes.txt'
@@ -51,14 +53,20 @@ fileCreateError = False
 fileModifyDate = ''
 fileModifyError = False
 
+# Variables for images
+imageDateTaken = ''
+cameraMake = ''
+cameraModel = ''
+dimensions = ''
+
 # Metadata dictionary
-metadata = ['Name', 'Size', 'Item type', 'Date modified', 'Date created', 'Date accessed', 'Attributes', 'Offline status', 'Availability', 'Perceived type', 'Owner', 'Kind', 'Date taken', 'Contributing artists', 'Album', 'Year', 'Genre', 'Conductors', 'Tags', 'Rating', 'Authors', 'Title', 'Subject', 'Categories', 'Comments', 'Copyright', '#', 'Length', 'Bit rate', 'Protected', 'Camera model', 'Dimensions', 'Camera maker', 'Company', 'File description', 'Masters keywords', 'Masters keywords']
+metadata = ['Name', 'Size', 'Item type', 'Date modified', 'Date created', 'Date accessed', 'Date taken', 'Camera model', 'Dimensions', 'Camera maker']
 
 # Reading binary of file
 def read_file(filename):
     # Try-Except block to catch corruption
     try:
-        with open(fileName, 'rb') as file:
+        with open(filename, 'rb') as file:
             fileContents = file.read()
     
             # Determining size of file
@@ -70,6 +78,7 @@ def read_file(filename):
             fileType = filetype.guess(fileContents)
             if fileType is None:
                 fileTypeError = True
+
     except Exception:
         fileCorruptedError = True
         
@@ -78,26 +87,49 @@ def read_file(filename):
 if fileCorruptedError:
     # Send message to frontend
     # To-do...
-    return
+    pass
         
 def get_file_datetime(filename):
     
-    accessTimestamp = os.path.getatime(filename)
-    fileAccessDate = datetime.datetime.fromtimestamp(accessTimestamp)
+    stat_info = os.stat(filename)
+    
+    fileAccessDate = stat_info.st_atime
     if fileAccessDate is None:
         fileAccessError = True
-        
-    createTimestamp = os.path.getctime(filename)
-    fileCreateDate = datetime.datetime.fromtimestamp(createTimestamp)
+
+    fileCreateDate = stat_info.st_birthtime
     if fileCreateDate is None:
         fileCreateError = True
         
-    modifyTimestamp = os.path.getmtime(filename)
-    fileModifyDate = datetime.datetime.fromtimestamp(modifyTimestamp)
+    fileModifyDate = stat_info.st_mtime
     if fileModifyDate is None:
         fileModifyError = True
 
     return
+
+def get_image_properties(filename):
+    
+    with open(filename, 'rb') as image:
+        tags = exifread.process_file(image)        
+    
+    if 'EXIF DateTimeOriginal' in tags:
+        imageDateTaken = tags['EXIF DateTimeOriginal'].values
+    else:
+        imageDateTaken = None
+    
+    if 'Image Make' in tags:
+        cameraMake = tags['Image Make'].values
+    else:
+        cameraMake = None
+    
+    image = Image.open(filename)
+    width, height = image.size
+    dimensions = str(width) + 'x' + str(height)
+    
+    if 'Image Model' in tags:
+        cameraModel = tags['Image Model'].values
+    else:
+        cameraModel = None
 
 # Finding file metadata using win32
 def get_file_metadata(path, filename, metadata):
@@ -113,7 +145,7 @@ def get_file_metadata(path, filename, metadata):
 
     return file_metadata
 
-def compile_metadata(fileName, fileSize, fileType, fileModifyDate, fileCreateDate, fileAccessDate):
+def compile_metadata(fileName, fileSize, fileType, fileModifyDate, fileCreateDate, fileAccessDate, fileDateTaken):
     return
 
 def compare_metadata():
