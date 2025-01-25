@@ -1,5 +1,67 @@
 <script lang="ts">
     import DropIn from './dropIn.svelte';
+    let selectedFile: File | null = null;
+
+    async function uploadFile() {
+        if (!selectedFile) {
+            alert("No file selected");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        try {
+            const response = await fetch('http://localhost:5000/api/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert(`File uploaded successfully: ${result.file_path}`);
+            } else {
+                alert(`Error: ${result.error}`);
+            }
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            alert('Error uploading file');
+        }
+    }
+
+    async function checkFile() {
+        if (!selectedFile) {
+            alert("No file selected");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        try {
+            const response = await fetch('http://localhost:5000/api/check', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert(`File checked successfully: ${result.message}`);
+            } else {
+                alert(`Error: ${result.error}`);
+            }
+        } catch (error) {
+            console.error('Error checking file:', error);
+            alert('Error checking file');
+        }
+    }
+
+    function handleFileChange(event: Event) {
+        const input = event.target as HTMLInputElement;
+        if (input && input.files) {
+            selectedFile = input.files[0];
+        }
+    }
 </script>
 
 <style>
@@ -12,20 +74,6 @@
         outline: none;
         font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     }
-    .bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        z-index: 0;
-    }
-    .bg img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-}
     .navbar {
         background-color: #363B5B;
         color: white;
@@ -117,18 +165,27 @@ h1 {
 		visibility: hidden;
 	}
 
-
 }
 
-
+.bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/assets/bgdesign.png');
+        background-size: cover;
+        background-position: center;
+        z-index: 0;
+    }
 </style>
 
-<div class="bg">
-    <img src="/assets/bgdesign.png" alt="bgimg">
-</div>
+
 <div class="navbar">
     <h1> insert logo-name </h1>
 </div>
+
+<div class="bg"></div>
 
 <div class="container">
     <h2>Purpose</h2>
@@ -138,6 +195,6 @@ h1 {
     
     <DropIn />
 
-    <button class="button">Check Your File</button>
+    
+    <button class="button" on:click={checkFile}>Check Your File</button>
 </div>
-
