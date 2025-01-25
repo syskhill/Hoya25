@@ -145,8 +145,20 @@ def get_file_metadata(path, filename, metadata):
 
     return file_metadata
 
-def compile_metadata(fileName, fileSize, fileType, fileModifyDate, fileCreateDate, fileAccessDate, fileDateTaken):
-    return
+def compile_metadata(fileName, fileSize, fileType, fileModifyDate, fileCreateDate, fileAccessDate, imageDateTaken, cameraModel, dimensions, cameraMake):
+    data = {'Name': fileName, 'Size': fileSize, 'Item type': fileType, 'Date modified': fileModifyDate, 'Date created': fileCreateDate, 'Date accessed': fileAccessDate, 'Date taken': imageDateTaken, 'Camera model': cameraModel, 'Dimensions': dimensions, 'Camera maker': cameraMake}
+    
+    return data
 
-def compare_metadata():
+def compare_metadata(metadata, data):
+    for key in metadata:
+        if metadata[key] == data[key]:
+            return
+            # Share successful comparison with frontend
+        else:
+            # send discrepencies to frontend
+            # To-do...
+            return
+    # send comparison to frontend
+    # To-do...
     return
