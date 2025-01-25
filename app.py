@@ -159,6 +159,7 @@ def compare_metadata(metadata, data):
     # To-do...
     return
 
+# main method.
 def __main__():
     fileName = 'V_notes.txt'
     read_file(fileName)
