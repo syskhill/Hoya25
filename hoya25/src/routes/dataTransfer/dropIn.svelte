@@ -1,6 +1,7 @@
 <script lang="ts">
     let file: File | null = null;
     let fileInput: HTMLInputElement | null = null;
+    let fileName: string | null = null;
 
     const handleDrop = (event: DragEvent) => {
         event.preventDefault();
@@ -8,6 +9,7 @@
         if (dataTransfer && dataTransfer.files.length) {
             const droppedFiles = dataTransfer.files;
             file = droppedFiles[0];
+            fileName = file.name;
             console.log('File dropped:', file.name);
             uploadFile(file);
         }
@@ -22,6 +24,7 @@
         if (input && input.files && input.files.length) {
             const selectedFiles = input.files;
             file = selectedFiles[0];
+            fileName = file.name;
             console.log('File selected:', file.name);
             uploadFile(file);
         }
@@ -37,16 +40,9 @@
         const formData = new FormData();
         formData.append('file', file);
 
-        try {
-            const response = await fetch('http://localhost:5000/api/upload', {
-                method: 'POST',
-                body: formData
-            });
-            const result = await response.json();
-            console.log('File uploaded successfully:', result);
-        } catch (error) {
-            console.error('Error uploading file:', error);
-        }
+        // Simulate file upload
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        console.log('File uploaded:', file.name);
     };
 </script>
 
@@ -73,9 +69,27 @@
         border-color: white;
         color: white;
     }
+    .file-name {
+        
+        font-size: 1.5rem;
+        color: #363B5B;
+        text-align: center;
+        align-items:center;
+        justify-content: center;
+        display: flex;
+        max-width: 90%;
+        word-wrap: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0, 10px;
+    }
 </style>
 
-<div class="drop-zone" role="button" tabindex="0" on:drop={handleDrop} on:dragover={handleDragOver} on:click={triggerFileInputClick} on:keydown={(event) => event.key === 'Enter' && triggerFileInputClick()}>
-    <p>Drag & Drop <br>to Upload File</p>
-    <input bind:this={fileInput} type="file" on:change={handleFileInput}>
+<div class="drop-zone" role="button" tabindex="0" on:drop={handleDrop} on:dragover={handleDragOver} on:click={triggerFileInputClick} on:keydown={(event) => { if (event.key === 'Enter' || event.key === ' ') triggerFileInputClick(); }}>
+    <input type="file" bind:this={fileInput} on:change={handleFileInput} style="display: none;" />
+    {#if fileName}
+        <div class="file-name">{fileName}</div>
+    {:else}
+        <div><p>Drag & Drop <br> ⇪ <br>to Upload File</p></div>
+    {/if}
 </div>
