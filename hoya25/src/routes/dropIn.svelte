@@ -40,9 +40,23 @@
         const formData = new FormData();
         formData.append('file', file);
 
-        // Simulate file upload
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        console.log('File uploaded:', file.name);
+        try {
+            const response = await fetch('http://localhost:5000/api/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert(`File uploaded successfully: ${result.file_path}`);
+            } else {
+                alert(`Error: ${result.error}`);
+            }
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            alert('Error uploading file');
+        }
+
     };
 </script>
 

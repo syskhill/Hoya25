@@ -1,65 +1,14 @@
 <script lang="ts">
     import DropIn from './dropIn.svelte';
+    import CheckFile from './checkFile.svelte';
     let selectedFile: File | null = null;
-
-    async function uploadFile() {
-        if (!selectedFile) {
-            alert("No file selected");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('file', selectedFile);
-
-        try {
-            const response = await fetch('http://localhost:5000/api/upload', {
-                method: 'POST',
-                body: formData
-            });
-
-            const result = await response.json();
-            if (response.ok) {
-                alert(`File uploaded successfully: ${result.file_path}`);
-            } else {
-                alert(`Error: ${result.error}`);
-            }
-        } catch (error) {
-            console.error('Error uploading file:', error);
-            alert('Error uploading file');
-        }
-    }
-
-    async function checkFile() {
-        if (!selectedFile) {
-            alert("No file selected");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('file', selectedFile);
-
-        try {
-            const response = await fetch('http://localhost:5000/api/check', {
-                method: 'POST',
-                body: formData
-            });
-
-            const result = await response.json();
-            if (response.ok) {
-                alert(`File checked successfully: ${result.message}`);
-            } else {
-                alert(`Error: ${result.error}`);
-            }
-        } catch (error) {
-            console.error('Error checking file:', error);
-            alert('Error checking file');
-        }
-    }
+    let filename = '';
 
     function handleFileChange(event: Event) {
         const input = event.target as HTMLInputElement;
         if (input && input.files) {
             selectedFile = input.files[0];
+            filename = selectedFile.name;
         }
     }
 </script>
@@ -203,8 +152,9 @@ h1 {
     <p>You will receive a score and an explanation for any issues found within the file.
     </p>
     
-    <DropIn />
+    <DropIn on:fileChange={handleFileChange} />
 
-    
-    <button class="button" on:click={checkFile}>Check Your File</button>
+    <CheckFile {filename} />
+
+    <button class="button">Check Your File</button>
 </div>
