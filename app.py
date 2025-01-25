@@ -28,36 +28,36 @@ from PIL import Image
 from pathlib import Path
 
 # Get file and filename from frontend
-fileName = 'V_notes.txt'
+# To-do...
 
 # Variables for corruption
 fileCorruptedError = False
 
 # Variables for filetype
-fileType = ''
+fileType = None
 fileTypeError = False
 
 # Variables for filesize
-fileSize = 0
+fileSize = None
 fileSizeError = False
 
 # Variables for access time
-fileAccessDate = ''
+fileAccessDate = None
 fileAccessError = False
 
 # Variables for creation time
-fileCreateDate = ''
+fileCreateDate = None
 fileCreateError = False
 
 # Variables for modification time
-fileModifyDate = ''
+fileModifyDate = None
 fileModifyError = False
 
 # Variables for images
-imageDateTaken = ''
-cameraMake = ''
-cameraModel = ''
-dimensions = ''
+imageDateTaken = None
+cameraMake = None
+cameraModel = None
+dimensions = None
 
 # Metadata dictionary
 metadata = ['Name', 'Size', 'Item type', 'Date modified', 'Date created', 'Date accessed', 'Date taken', 'Camera model', 'Dimensions', 'Camera maker']
@@ -81,13 +81,9 @@ def read_file(filename):
 
     except Exception:
         fileCorruptedError = True
-        
+        # Send message to frontend
+        # To-do...
     return
-
-if fileCorruptedError:
-    # Send message to frontend
-    # To-do...
-    pass
         
 def get_file_datetime(filename):
     
@@ -162,3 +158,15 @@ def compare_metadata(metadata, data):
     # send comparison to frontend
     # To-do...
     return
+
+def __main__():
+    fileName = 'V_notes.txt'
+    read_file(fileName)
+    get_file_datetime(fileName)
+    
+    if fileType == 'JPEG' or fileType == 'PNG':
+        get_image_properties(fileName)
+    
+    get_file_metadata(f"uploads\{fileName}", fileName, metadata)
+    compiledData = compile_metadata(fileName, fileSize, fileType, fileModifyDate, fileCreateDate, fileAccessDate, imageDateTaken, cameraModel, dimensions, cameraMake)
+    compare_metadata(metadata, compiledData)
