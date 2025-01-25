@@ -195,7 +195,6 @@ h1 {
     
     <DropIn />
 
-    <input type="file" on:change={handleFileChange} />
-    <button class="button" on:click={uploadFile}>Upload File</button>
+    
     <button class="button" on:click={checkFile}>Check Your File</button>
 </div>

@@ -12,6 +12,20 @@
         outline: none;
         font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     }
+    .bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+    }
+    .bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+}
     .navbar {
         background-color: #363B5B;
         color: white;
@@ -103,27 +117,18 @@ h1 {
 		visibility: hidden;
 	}
 
+
 }
 
-.bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('/assets/bgdesign.png');
-        background-size: cover;
-        background-position: center;
-        z-index: 0;
-    }
+
 </style>
 
-
+<div class="bg">
+    <img src="/assets/bgdesign.png" alt="bgimg">
+</div>
 <div class="navbar">
     <h1> insert logo-name </h1>
 </div>
-
-<div class="bg"></div>
 
 <div class="container">
     <h2>Purpose</h2>
