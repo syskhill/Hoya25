@@ -44,11 +44,6 @@
   font-style:oblique;
   padding: 0 2rem;
 }
-.navbar i{
-  color:white;
-  font-family: monospace;
-  
-}
 
   .container {
       display: flex;

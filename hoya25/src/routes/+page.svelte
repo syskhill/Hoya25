@@ -97,20 +97,6 @@
         margin: 0.5rem;
         font-family:Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
     }
-    button{
-    padding: 1rem 3rem;
-    cursor: pointer;
-    border-radius: 40px;
-    font-size: 1rem;
-    background: #C7B171;
-    color: white;
-    margin: 3rem;
-}
-button:hover {
-    background: white;
-    color: #C7B171;
-
-}
 
 h1 {
 	color: #363B5B;
