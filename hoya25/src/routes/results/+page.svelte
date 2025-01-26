@@ -150,9 +150,9 @@ filter: drop-shadow(0px 0px 5px currentColor);
 </style>
 
 <div class="navbar">
-  <h1> fileMaven </h1>
+  <h1> ➪ fileMaven </h1>
 </div>
-  <div class="container"><h2>Safety Score: <i class="underline">{safetyScore}</i></h2>
+  <div class="container"><h2>➪Safety Score: <i class="underline">{safetyScore}</i></h2>
   
   <h3>Checklist</h3>
   <ul>

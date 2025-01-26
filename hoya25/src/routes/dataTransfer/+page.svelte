@@ -164,13 +164,13 @@ h1 {
 
 
 <div class="navbar">
-    <h1> fileMaven </h1>
+    <h1> ➪ fileMaven </h1>
 </div>
 
 <div class="bg"></div>
 
 <div class="container">
-    <h2>Purpose</h2>
+    <h2>➪ Purpose</h2>
     <p>
         This website allows you to upload a file and check its contents for any discrepancies.</p>
     <p>You will receive a score and an explanation for any issues found within the file.
