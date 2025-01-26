@@ -1,14 +1,39 @@
 <script lang="ts">
+	import CheckFile from './checkFile.svelte';
     import DropIn from './dropIn.svelte';
-    import CheckFile from './checkFile.svelte';
     let selectedFile: File | null = null;
-    let filename = '';
+
+    async function uploadFile() {
+        if (!selectedFile) {
+            alert("No file selected");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        try {
+            const response = await fetch('http://localhost:5000/api/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert(`File uploaded successfully: ${result.file_path}`);
+            } else {
+                alert(`Error: ${result.error}`);
+            }
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            alert('Error uploading file');
+        }
+    }
 
     function handleFileChange(event: Event) {
         const input = event.target as HTMLInputElement;
         if (input && input.files) {
             selectedFile = input.files[0];
-            filename = selectedFile.name;
         }
     }
 </script>
@@ -151,10 +176,8 @@ h1 {
         This website allows you to upload a file and check its contents for any discrepancies.</p>
     <p>You will receive a score and an explanation for any issues found within the file.
     </p>
-    
-    <DropIn on:fileChange={handleFileChange} />
 
-    <CheckFile {filename} />
+    <DropIn />
 
-    <button class="button">Check Your File</button>
+    <CheckFile />
 </div>

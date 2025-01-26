@@ -5,8 +5,11 @@ import os
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})  # Allow all origins for simplicity
 
-UPLOAD_FOLDER = 'uploads'
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+# Set up the uploads folder
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Path to the backend directory
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')      # Path to the uploads folder
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)             # Ensure the folder exists
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/api/upload', methods=['POST'])
 def upload_file():
@@ -43,5 +46,20 @@ def check_file():
 
     return jsonify({'message': 'File checked successfully', 'file_path': file_path})
 
+@app.route('/api/upload-status', methods=['GET'])
+def upload_status():
+    folder = app.config['UPLOAD_FOLDER']
+    print(f"Checking uploads folder: {folder}")  # Debug log
+    if not os.path.exists(folder):
+        return jsonify({'error': 'Uploads folder does not exist'}), 400
+
+    files = os.listdir(folder)
+    print(f"Files in uploads folder: {files}")  # Debug log
+    if len(files) == 0:
+        return jsonify({'files': []}), 200
+
+    return jsonify({'files': files}), 200
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
