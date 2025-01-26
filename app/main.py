@@ -2,7 +2,7 @@
 # FileMaven/Glitchspot
 
 import time
-from watcher import Watcher
+# from watcher import Watcher
 from reader import read_file
 from clock import get_file_datetime
 from imager import get_image_properties
@@ -70,10 +70,11 @@ def __main__():
         clear_pending_task(directoryPath, fileName.split('.')[0])
         
     # Clean uploads directory
-    time.sleep(300)
+    time.sleep(30)
     clean_uploads(uploadPath)
     return
 
 if __name__ == "__main__":
-    watcher = Watcher(__main__)
-    watcher.run
+    __main__()
+    #watcher = Watcher(__main__)
+    #watcher.run
