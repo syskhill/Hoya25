@@ -2,6 +2,7 @@
 # FileMaven/Glitchspot
 
 import time
+from watcher import Watcher
 from reader import read_file
 from clock import get_file_datetime
 from imager import get_image_properties
@@ -73,4 +74,6 @@ def __main__():
     clean_uploads(uploadPath)
     return
 
-__main__()
+if __name__ == "__main__":
+    watcher = Watcher(__main__)
+    watcher.run
