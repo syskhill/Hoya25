@@ -21,7 +21,7 @@ def __main__():
     
     # Iterate over pending tasks
     for task in pendingTasks:
-        fileName = str(task)
+        fileName = task
         filePath = (uploadPath + fileName)
     
         # Read file

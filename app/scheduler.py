@@ -14,7 +14,8 @@ def schedule_pending_tasks(directoryPath):
             
             # Load JSON data into a list
             data = json.load(jsonFile)
-            pendingTasks.append(data.values())
+            for val in data.values():
+                pendingTasks.append(val)
             
     return pendingTasks
 

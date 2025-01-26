@@ -1,5 +1,8 @@
 import json
 
+# Variables to store result directory path
+resultPath = './results/'
+
 # Function to create a corrupted result JSON file
 def create_corrupted_result(Name):
     
@@ -16,7 +19,7 @@ def create_corrupted_result(Name):
         'Dimensions': None
     }
     
-    with open(f'.results/{Name}.json', 'w') as jsonFile:
+    with open(resultPath + Name + '.json', 'w') as jsonFile:
         json.dump(result, jsonFile)
         
     return
@@ -28,12 +31,12 @@ def create_result(Name, Size, Type, DateAccessed, DateCreated, DateModify):
         'Name': Name,
         'Size': Size,
         'Type': Type,
-        'Date accessed': DateAccessed,
-        'Date created': DateCreated,
-        'Date modify': DateModify
+        'Date accessed': str(DateAccessed),
+        'Date created': str(DateCreated),
+        'Date modify': str(DateModify)
     }
     
-    with open(f'.results/{Name}.json', 'w') as jsonFile:
+    with open(resultPath + Name + '.json', 'w') as jsonFile:
         json.dump(result, jsonFile)
         
     return
@@ -45,16 +48,16 @@ def create_result_image(Name, Size, Type, DateAccessed, DateCreated, DateModify,
         'Name': Name,
         'Size': Size,
         'Type': Type,
-        'Date accessed': DateAccessed,
-        'Date created': DateCreated,
-        'Date modify': DateModify,
-        'Date taken': DateTaken,
+        'Date accessed': str(DateAccessed),
+        'Date created': str(DateCreated),
+        'Date modify': str(DateModify),
+        'Date taken': str(DateTaken),
         'Camera make': CameraMake,
         'Camera model': CameraModel,
         'Dimensions': Dimensions
     }
     
-    with open(f'.results/{Name}.json', 'w') as jsonFile:
+    with open(resultPath + Name + '.json', 'w') as jsonFile:
         json.dump(result, jsonFile)
 
     return
