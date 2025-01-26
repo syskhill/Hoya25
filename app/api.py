@@ -1,45 +1,33 @@
+from flask import Flask, jsonify, send_from_directory
 import os
-import json
-from flask import Flask, jsonify
-from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-RESULTS_FOLDER = 'results'  # Folder where the test results are stored
-os.makedirs(RESULTS_FOLDER, exist_ok=True)  # Ensure the folder exists
+RESULTS_FOLDER = './results'
 
-@app.route('/api/results', methods=['GET'])
-def get_results():
-    # Get a list of all JSON files in the results folder
-    json_files = [f for f in os.listdir(RESULTS_FOLDER) if f.endswith('.json')]
+# Endpoint to send a specific JSON file from the results folder
+@app.route('/api/results/<filename>', methods=['GET'])
+def get_result_file(filename):
+    # Check if the file is a valid JSON file
+    if filename.endswith('.json'):
+        file_path = os.path.join(RESULTS_FOLDER, filename)
 
-    # Read each JSON file and parse the content
-    results = {}
-    for file_name in json_files:
-        file_path = os.path.join(RESULTS_FOLDER, file_name)
-        with open(file_path, 'r') as file:
-            results[file_name] = json.load(file)
+        # Check if the file exists
+        if os.path.exists(file_path):
+            # Send the JSON file directly
+            response = send_from_directory(RESULTS_FOLDER, filename, as_attachment=False, mimetype='application/json')
 
-    # Return the results as a JSON response
-    return jsonify(results), 200
+            # After sending the file, delete it
+            os.remove(file_path)
 
-
-@app.route('/api/results/<file_name>', methods=['GET'])
-def get_result_by_name(file_name):
-    # Validate file name to prevent path traversal attacks
-    if not file_name.endswith('.json'):
-        return jsonify({'error': 'Invalid file type'}), 400
-
-    file_path = os.path.join(RESULTS_FOLDER, file_name)
-    if not os.path.exists(file_path):
-        return jsonify({'error': 'File not found'}), 404
-
-    with open(file_path, 'r') as file:
-        result = json.load(file)
-    return jsonify(result), 200
-
+            return response
+        else:
+            return jsonify({"error": "File not found"}), 404
+    else:
+        return jsonify({"error": "Not a JSON file"}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
 
