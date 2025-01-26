@@ -40,7 +40,6 @@ fileTypeError = False
 # Variables for filesize
 fileSize = None
 fileSizeError = False
-
 # Variables for access time
 fileAccessDate = None
 fileAccessError = False

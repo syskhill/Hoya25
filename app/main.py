@@ -11,7 +11,7 @@ from jsonifier import create_result, create_result_image, create_corrupted_resul
 metadata = ['Name', 'Size', 'Type', 'Date accessed', 'Date created', 'Date modify', 'Date taken', 'Camera make', 'Camera model', 'Dimensions']
 
 # Relative paths
-directoryPath = '.pending/'
+directoryPath = './pending/'
 uploadPath = './uploads/'
 
 def __main__():
