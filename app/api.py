@@ -1,33 +1,36 @@
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify
+from flask_cors import CORS
 import os
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for cross-origin requests
 
-RESULTS_FOLDER = './results'
+# Get the path to the results directory
+results_dir = os.path.join(os.path.dirname(__file__), 'results')
 
-# Endpoint to send a specific JSON file from the results folder
-@app.route('/api/results/<filename>', methods=['GET'])
-def get_result_file(filename):
-    # Check if the file is a valid JSON file
-    if filename.endswith('.json'):
-        file_path = os.path.join(RESULTS_FOLDER, filename)
+@app.route('/api/results', methods=['GET'])
+def get_results():
+    # Get list of all JSON files in results directory
+    try:
+        json_files = [f for f in os.listdir(results_dir) if f.endswith('.json')]
+    except FileNotFoundError:
+        return jsonify({"error": "Results directory not found"}), 404
 
-        # Check if the file exists
-        if os.path.exists(file_path):
-            # Send the JSON file directly
-            response = send_from_directory(RESULTS_FOLDER, filename, as_attachment=False, mimetype='application/json')
-
-            # After sending the file, delete it
-            os.remove(file_path)
-
-            return response
-        else:
-            return jsonify({"error": "File not found"}), 404
-    else:
-        return jsonify({"error": "Not a JSON file"}), 400
+    # Read and parse all JSON files
+    results = []
+    for json_file in json_files:
+        file_path = os.path.join(results_dir, json_file)
+        with open(file_path, 'r') as f:
+            try:
+                data = json.load(f)
+                results.append({
+                    "filename": json_file,
+                    "content": data
+                })
+            except json.JSONDecodeError:
+                continue
+    
+    return jsonify(results)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
