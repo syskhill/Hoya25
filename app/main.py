@@ -1,10 +1,11 @@
 # Developing a python application
 # FileMaven/Glitchspot
 
+import time
 from reader import read_file
 from clock import get_file_datetime
 from imager import get_image_properties
-from scheduler import schedule_pending_tasks, clear_pending_task
+from scheduler import schedule_pending_tasks, clear_pending_task, clean_uploads
 from jsonifier import create_result, create_result_image, create_corrupted_result
 
 # Metadata dictionary
@@ -67,6 +68,9 @@ def __main__():
         # Clear pending task
         clear_pending_task(directoryPath, fileName.split('.')[0])
         
+    # Clean uploads directory
+    time.sleep(300)
+    clean_uploads(uploadPath)
     return
 
 __main__()
