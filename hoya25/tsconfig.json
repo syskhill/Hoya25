@@ -17,10 +17,5 @@
 		"noEmit": true,
 		"types": ["svelte"]
 	},
-	"include": ["src/**/*", "src/**/*.svelte"],
-	"exclude": ["node_modules"],
-	"compilerOptions": {
-		"forceConsistentCasingInFileNames": true
-	  }
-	  
+	"include": ["src/**/*", "src/node_modules/**/*"],
 }
