@@ -29,33 +29,6 @@
         }
     }
 
-    async function checkFile() {
-        if (!selectedFile) {
-            alert("No file selected");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('file', selectedFile);
-
-        try {
-            const response = await fetch('http://localhost:5000/api/check', {
-                method: 'POST',
-                body: formData
-            });
-
-            const result = await response.json();
-            if (response.ok) {
-                alert(`File checked successfully: ${result.message}`);
-            } else {
-                alert(`Error: ${result.error}`);
-            }
-        } catch (error) {
-            console.error('Error checking file:', error);
-            alert('Error checking file');
-        }
-    }
-
     function handleFileChange(event: Event) {
         const input = event.target as HTMLInputElement;
         if (input && input.files) {
@@ -202,9 +175,6 @@ h1 {
         This website allows you to upload a file and check its contents for any discrepancies.</p>
     <p>You will receive a score and an explanation for any issues found within the file.
     </p>
-    
-    <DropIn />
 
-    
-    <button class="button" on:click={checkFile}>Check Your File</button>
+    <DropIn />
 </div>
