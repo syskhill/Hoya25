@@ -38,3 +38,20 @@
 </script>
 
 <button on:click={handleClick}>Check Files</button>
+
+<style>
+    button{
+        padding: 1rem 3rem;
+        cursor: pointer;
+        border-radius: 40px;
+        font-size: 1rem;
+        background: #C7B171;
+        color: white;
+        margin: 3rem;
+    }
+    button:hover {
+    background: white;
+    color: #C7B171;
+
+}
+</style>
